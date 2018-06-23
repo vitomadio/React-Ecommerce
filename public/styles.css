@@ -1,0 +1,27 @@
+/*Dashboard elements*/
+
+div.sidebar{
+	height: 100vh;
+	background: #494949;
+}
+
+li.side-item{
+	background: transparent;
+	border-width: 1px 0px 1px 0px;
+	border-style: solid;
+	border-color: #595959;
+	border-radius: 0px !important;
+}
+
+li.side-item:hover{
+	background: #595959;
+}
+
+button.btn-link{ 
+	color: #ddd;
+}
+
+button.btn-link:hover{ 
+	text-decoration: none;	
+	color: #ddd;
+}
