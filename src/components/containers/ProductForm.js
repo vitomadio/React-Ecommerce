@@ -59,7 +59,7 @@ class ProductForm extends Component {
               </div>
               <div className="form-group ">
                 <label for="price">Price:</label>
-                <input type="text" placeholder="Insert Price e.g. 9.99" id="price" name="price" className="form-control"
+                <input type="text" placeholder="Insert Price e.g. 99.99" id="price" name="price" className="form-control"
                 onChange={(e) => this.setState({price: e.target.value})}
                 />
               </div>
