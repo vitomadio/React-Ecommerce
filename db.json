@@ -1,0 +1,434 @@
+{
+    "_id" : ObjectId("5a81ced3a69cbc429aeb1ab7"),
+    "brand" : "Nike",
+    "model" : "nike-air1",
+    "category" : "Running",
+    "gender" : "Women's",
+    "price" : 120,
+    "pics" : [ 
+        "http://localhost:8080/3a46a6eeb63f9462b9f55bd524f5e667", 
+        "http://localhost:8080/8695f01303a03dc85b7fedcc3456f7cb", 
+        "http://localhost:8080/1ec75cb04404b3843a5ee4f534bdfca2", 
+        "http://localhost:8080/2f08eae7f5cab354a411b41f610ac69b"
+    ],
+    "sizes" : [ 
+        {
+            "idx" : 0,
+            "qty" : 10,
+            "size" : 6,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 1,
+            "qty" : 10,
+            "size" : 6.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 2,
+            "qty" : 10,
+            "size" : 7,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 3,
+            "qty" : 10,
+            "size" : 7.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 4,
+            "qty" : 10,
+            "size" : 8,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 5,
+            "qty" : 10,
+            "size" : 8.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 6,
+            "qty" : 10,
+            "size" : 9,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 7,
+            "qty" : 10,
+            "size" : 9.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 8,
+            "qty" : 10,
+            "size" : 10,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 9,
+            "qty" : 10,
+            "size" : 10.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 10,
+            "qty" : 10,
+            "size" : 11,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 11,
+            "qty" : 10,
+            "size" : 11.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 12,
+            "qty" : 10,
+            "size" : 12,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 13,
+            "qty" : 10,
+            "size" : 12.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 14,
+            "qty" : 10,
+            "size" : 13,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 15,
+            "qty" : 5,
+            "size" : 13.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 16,
+            "qty" : 5,
+            "size" : 14,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 17,
+            "qty" : 5,
+            "size" : 14.5,
+            "type" : "US-Adults"
+        }
+    ],
+    "__v" : 0
+}
+
+{
+    "_id" : ObjectId("5a83107fcfcf821227ebd67b"),
+    "brand" : "Adidas",
+    "model" : "Black 312",
+    "category" : "Casual",
+    "gender" : "Men's",
+    "price" : 99,
+    "pics" : [ 
+        "http://localhost:8080/62ac49491ac2d88bf091c42f18cae964", 
+        "http://localhost:8080/f18f2d367cbc36e5eedc289e5a8014ef", 
+        "http://localhost:8080/42ded1b6898eaa5af86ece423f475f35", 
+        "http://localhost:8080/9a0ee73fd9435f99ad9c08a4d9522483"
+    ],
+    "sizes" : [ 
+        {
+            "idx" : 0,
+            "qty" : 5,
+            "size" : 6,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 1,
+            "qty" : 5,
+            "size" : 6.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 2,
+            "qty" : 5,
+            "size" : 7,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 3,
+            "qty" : 10,
+            "size" : 7.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 4,
+            "qty" : 10,
+            "size" : 8,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 5,
+            "qty" : 10,
+            "size" : 8.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 6,
+            "qty" : 10,
+            "size" : 9,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 7,
+            "qty" : 10,
+            "size" : 9.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 8,
+            "qty" : 10,
+            "size" : 10,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 9,
+            "qty" : 10,
+            "size" : 10.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 10,
+            "qty" : 10,
+            "size" : 11,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 11,
+            "qty" : 10,
+            "size" : 11.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 12,
+            "qty" : 5,
+            "size" : 12,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 13,
+            "qty" : 5,
+            "size" : 12.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 14,
+            "qty" : 5,
+            "size" : 13,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 15,
+            "qty" : 5,
+            "size" : 13.5,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 16,
+            "qty" : 5,
+            "size" : 14,
+            "type" : "US-Adults"
+        }, 
+        {
+            "idx" : 17,
+            "qty" : 5,
+            "size" : 14.5,
+            "type" : "US-Adults"
+        }
+    ],
+    "__v" : 0
+}
+{
+    "_id" : ObjectId("5a83113dcfcf821227ebd67c"),
+    "brand" : "Puma",
+    "model" : "Rusty",
+    "category" : "Skate",
+    "gender" : "Kids'",
+    "price" : 56,
+    "pics" : [ 
+        "http://localhost:8080/928507e4b510abaa5caed294a11d6168", 
+        "http://localhost:8080/7900bb00b9b158d7b6a0bef38b333004"
+    ],
+    "sizes" : [ 
+        {
+            "idx" : 0,
+            "qty" : 6,
+            "size" : 5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 1,
+            "qty" : 6,
+            "size" : 5.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 2,
+            "qty" : 6,
+            "size" : 6,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 3,
+            "qty" : 6,
+            "size" : 6.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 4,
+            "qty" : 6,
+            "size" : 7,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 5,
+            "qty" : 6,
+            "size" : 7.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 6,
+            "qty" : 6,
+            "size" : 8,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 7,
+            "qty" : 6,
+            "size" : 8.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 8,
+            "qty" : 6,
+            "size" : 9,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 9,
+            "qty" : 6,
+            "size" : 9.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 10,
+            "qty" : 6,
+            "size" : 10,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 11,
+            "qty" : 6,
+            "size" : 10.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 12,
+            "qty" : 6,
+            "size" : 11,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 13,
+            "qty" : 6,
+            "size" : 11.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 14,
+            "qty" : 6,
+            "size" : 12,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 15,
+            "qty" : 6,
+            "size" : 12.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 16,
+            "qty" : 6,
+            "size" : 13,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 17,
+            "qty" : 6,
+            "size" : 13.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 18,
+            "qty" : 6,
+            "size" : 1,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 19,
+            "qty" : 6,
+            "size" : 1.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 20,
+            "qty" : 6,
+            "size" : 2,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 21,
+            "qty" : 6,
+            "size" : 2.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 22,
+            "qty" : 6,
+            "size" : 3,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 23,
+            "qty" : 6,
+            "size" : 3.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 24,
+            "qty" : 6,
+            "size" : 4,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 25,
+            "qty" : 6,
+            "size" : 4.5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 26,
+            "qty" : 6,
+            "size" : 5,
+            "type" : "US-Kids'"
+        }, 
+        {
+            "idx" : 27,
+            "qty" : 6,
+            "size" : 5.5,
+            "type" : "US-Kids'"
+        }
+    ],
+    "__v" : 0
+}

@@ -1,5 +1,6 @@
 import superagent from 'superagent'
 import Promise from 'bluebird'
+import axios from 'axios' //Uploading files only.
 
 const getRequest = (url, params) => {
 
@@ -35,6 +36,11 @@ const postRequest = (url, body) => {
 			resolve(payload)
 		})
 	})
+}
+
+//Used Axios for file uploading.
+const multipartRequest = (url, data) => {
+	return axios.post(url,data.formData,data.config)
 }
 
 const delRequest = (url, body) => {
@@ -90,6 +96,23 @@ export default {
 			throw err
 		})
 	}, 
+
+	upload: (url, data, actionType) => {
+		return dispatch => multipartRequest(url, data)
+		.then(data => {
+			// console.log('DATA: ' + JSON.stringify(data))
+			if(actionType != null){
+				return dispatch({
+					type: actionType,
+					data: data.data.url
+				})
+			}
+			return data
+		})
+		.catch(err => {
+			throw err
+		})
+	},  
 
 	del: (url, body, actionType) => {
 		return dispatch => delRequest(url, body, actionType)

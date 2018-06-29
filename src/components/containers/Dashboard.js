@@ -25,13 +25,20 @@ class Dashboard extends Component {
 					</div>
 
 					{/*Display*/}
-					<div className="col-md-9">
+					<div className="col-md-9" style={styles.display}>
 						<ProductForm/>
 					</div>
 	
 				</div>
 			</div>
 		);
+	} 
+}
+
+const styles = {
+	display: {
+		overflowY:'scroll',
+		height: 100+'vh'
 	}
 }
 

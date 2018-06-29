@@ -18,7 +18,6 @@ addToCart: (body) => {
 },
 
 removeItemFromCart: (item,i) => {
-	console.log(JSON.stringify(i))
 		const body = {
 			cartId : item.cartId,
 			idx: i

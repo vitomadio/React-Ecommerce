@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import Dropzone from 'react-dropzone'
+import { connect } from 'react-redux'
+import { ProductActions } from '../../actions'
+
 
 class ProductForm extends Component {
   constructor(){
@@ -13,15 +17,60 @@ class ProductForm extends Component {
       subCategory:"",
       size:"", 
       price:0,
-      qty:""
+      qty:"",
+      selectedFile:null,
+      tmppath: null
     }
   }
 
+  componentDidUpdate(){
+  }
+
+  fileChangedHandler(e){
+    e.preventDefault()
+    const file = e.target.files[0]
+    const tmppath = URL.createObjectURL(file);
+    this.setState({
+      selectedFile: e.target.files[0],
+      tmppath: tmppath
+    })
+  }
+
+  uploadHandler(e){
+    e.preventDefault()
+    const file = this.state.selectedFile
+    const formData = new FormData();
+    formData.append('file',file)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    this.setState({
+      selectedFile: null,
+      tmppath: null
+    })
+
+    this.props.uploadPictures(formData, config)
+  }
+
   render(){
+    let dropzoneRef;
+    
+    const images = this.props.product.urls.map(image => {
+      return (
+       <div className="col-md-3">
+         <img src={image} style={{width:60, height:60}} className="img-thumbnail ml-3 mt-3"/>
+         <i class="far fa-times-circle ml-1" style={styles.imgIcon}
+          onClick
+         ></i>
+       </div>
+        )
+    })
 
     return (
       <div>
-        <div className="row p-3">
+        <div className="row p-3" style={styles.row}>
             <h3 className="text-center mt-3 col-md-12">Add Product to Inventory</h3>
             <hr/>
             
@@ -62,6 +111,25 @@ class ProductForm extends Component {
                 <input type="text" placeholder="Insert Price e.g. 99.99" id="price" name="price" className="form-control"
                 onChange={(e) => this.setState({price: e.target.value})}
                 />
+              </div>
+              {/*<Dropzone onDrop={(files) => this.uploadPicture(files)}>
+                <div>Try dropping some files here, or click to select files to upload.</div>
+              </Dropzone>*/}
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="validatedCustomFile" required onChange={this.fileChangedHandler.bind(this)}/>
+                <label class="custom-file-label" for="validatedCustomFile">{(this.state.selectedFile == null) ? null : this.state.selectedFile.name}</label>
+              </div>
+              <div className="row no-gutters align-items-center">
+                <div className="col-md-3">
+                  <button className="btn btn-primary mt-3" onClick={this.uploadHandler.bind(this)}>Upload</button>
+                </div>
+                  {(this.state.tmppath == null) ? null : <div className="col-md-3">
+                     <img src={this.state.tmppath} style={{width:60, height:60}} className="img-thumbnail ml-3 mt-3"/>
+                     <i className="far fa-times-circle" style={styles.imgIcon}
+                      onClick
+                     ></i>
+                   </div>}
+                 {images}
               </div>
             </form>
 
@@ -131,7 +199,26 @@ class ProductForm extends Component {
 const styles = {
   form: {
     width: "100%"
+  }, 
+  imgIcon: {
+    position: 'relative',
+    left: -21,
+    top: -54,
+    color: '#ddd',
+    float: 'right'
   }
 }
 
-export default ProductForm;
+const stateToProps = (state) => {
+  return {
+    product: state.product
+  }
+}
+
+const dispatchToProps = (dispatch) => {
+  return {
+    uploadPictures: (formData, config) => dispatch(ProductActions.uploadPictures(formData, config))
+  }
+}
+
+export default connect(stateToProps, dispatchToProps)(ProductForm);

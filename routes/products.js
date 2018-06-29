@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const multer = require('multer');//MIDDLEWARE FOR UPLOAD FILES.
-const upload = multer({dest: 'uploads/'}).single('photo');//CONFIGURE MULTER.
+const upload = multer({dest: 'public/uploads/'}).single('file');//CONFIGURE MULTER.
 const fs = require('fs');
 
 const Product = require('../models/product');
@@ -42,8 +42,9 @@ const Product = require('../models/product');
           return res.status(422).send("an Error occured")
         }  
        // No error occured.
-       const photo = req.file.filename;
-       res.json({success:true, message: "Upload Completed for ", photo:photo}); 
+       const file = req.file
+       
+       res.json({success:true, message: "Upload Completed for ", url:file}); 
      });     
 	});
 
@@ -61,12 +62,16 @@ const Product = require('../models/product');
 	//ADD A NEW PRODUCT.
 	router.post('/add-product', (req,res) => {
 		const newProduct = new Product({
+			sku:req.body.sku,
 			brand:req.body.brand,
 			model:req.body.model,
-			sizes:req.body.sizes,
+			color:req.body.color,
+			description: req.body.description,
 			category:req.body.category,
-			gender: req.body.gender, 
+			subCategory: req.body.subCategory, 
+			size:req.body.sizes,
 			price:req.body.price,
+			qty: req.body.qty,
 			pics:req.body.pics
 		});
 		newProduct.save((err, product) => {

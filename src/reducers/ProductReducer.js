@@ -3,12 +3,14 @@ import constant from '../constants'
 var initialState = {
 	Products : [],
 	item: {},
-	sizes: []
+	sizes: [],
+	urls: []
 }
 
 export default (state = initialState, action) => {
 	
 	let newState = Object.assign({}, state)
+	let newUrls = Object .assign([], newState.urls)
 
 	switch(action.type){
 		case constant.PRODUCTS_FETCHED: 
@@ -20,6 +22,12 @@ export default (state = initialState, action) => {
 			newState['item'] = action.data.product
 			newState['sizes'] = action.data.product.sizes
 			return newState	
+
+		case constant.PICTURES_UPLOADED:
+			const path = action.data.path.replace('public','')
+			newUrls.unshift(path)
+			newState['urls'] = newUrls
+			return newState
 
 		default:
 			return newState

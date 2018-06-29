@@ -17,7 +17,16 @@ export default {
 			// console.log(JSON.stringify(productId))
 		 return dispatch(HTTPAsync.get(url+'/'+productId, null,  constant.PRODUCT_FETCHED))
 		}
+	},
+
+	uploadPictures: (formData, config) => {
+		const data = {formData,config}
+		return dispatch => {
+			return dispatch(HTTPAsync.upload(url+'/upload', data, constant.PICTURES_UPLOADED))
+		}
 	}
+
+
 
 
 }
