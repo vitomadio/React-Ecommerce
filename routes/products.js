@@ -50,11 +50,14 @@ const Product = require('../models/product');
 
 	//REMOVE PRODUCT PICTURE FROM SELECTION.
 	router.post('/delete-file', (req,res) => {
-		fs.unlink( 'uploads/'+req.body.file, (err, response) => {
+		const url = req.body.url.slice(9)
+		const idx = req.body.idx
+		console.log(url)
+		fs.unlink( 'public/uploads/'+url, (err, response) => {
 			if(err){
 				res.json({success:false, message:'Something happened.' + err});
 			}else{
-				res.json({success:true, message:'Picture has been removed.'});
+				res.json({success:true, message:'Picture has been removed.',idx:idx});
 			}
 		});
 	});

@@ -160,8 +160,8 @@ router.get('/substract-one-item/:id', (req,res) => {
 
 //Remove Item from cart
 router.delete('/remove-item/:id', (req,res) => {
-	const cartId = req.body.cartId
-	const idx = req.body.idx
+	const cartId = req.body.cartId //Replace with req.body.body.cartId in case of broke
+	const idx = req.body.idx //Replace with req.body.body.idx in case of broke
 	Item.findById(req.params.id, (err, item) => {
 		if(err){
 			res.json({success:false, message:err});

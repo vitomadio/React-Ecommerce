@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux'
-import { ProductActions } from '../../actions'
+import { ProductActions, MisceActions } from '../../actions'
 
 
 class ProductForm extends Component {
@@ -9,36 +9,50 @@ class ProductForm extends Component {
     super()
     this.state = {
       sku:"",
-      brand: "", 
-      model: "", 
-      color: "",
-      description: "",
+      brand:"", 
+      model:"", 
+      color:"",
+      description:"",
       category:"", 
       subCategory:"",
       size:"", 
       price:0,
       qty:"",
+      taxFee:0,
       selectedFile:null,
-      tmppath: null
+      tmppath: null,
+      tmpUrls:[],
+      files: [],
+      newCategory:"",
+      newSubCategory:"",
+      newSize:""
     }
   }
 
-  componentDidUpdate(){
+  componentDidMount(){
+    this.props.loadDashboard()
   }
 
-  fileChangedHandler(e){
-    e.preventDefault()
-    const file = e.target.files[0]
-    const tmppath = URL.createObjectURL(file);
+  fileChangedHandler(files){
+    // e.preventDefault()
+    const file = files[0]
+    const path = URL.createObjectURL(file);
+    const filesAccepted = []
+    
+    filesAccepted.unshift({url:path})
     this.setState({
-      selectedFile: e.target.files[0],
-      tmppath: tmppath
+      files: filesAccepted,
+      selectedFile: file,
+      tmppath: path,
+      
     })
   }
 
   uploadHandler(e){
     e.preventDefault()
     const file = this.state.selectedFile
+    const filesPrev = Object.assign([], this.state.tmpUrls)
+    filesPrev.push(file.preview)
     const formData = new FormData();
     formData.append('file',file)
     const config = {
@@ -48,23 +62,97 @@ class ProductForm extends Component {
     }
     this.setState({
       selectedFile: null,
-      tmppath: null
+      tmppath: null,
+      tmpUrls:filesPrev
     })
-
     this.props.uploadPictures(formData, config)
+  }
+
+  deletePicture(imageUrl,i,e){
+    e.preventDefault()
+    const body = {
+      url:imageUrl,
+      idx: i
+    }
+    this.props.deletePicture(body)
+  }
+
+  dragStart(e) {
+    e.dataTransfer.setData("src", e.target.id);
+  }
+
+  allowDrop(e){
+    e.preventDefault()
+  }
+  //ON DROP FUNCTION AFTER DROPING A PICTURE TO ITS NEW POSITION
+  onDropSwap(e){
+    e.preventDefault()
+    var old_idx = e.dataTransfer.getData("src");
+    var new_idx = e.currentTarget.id
+    var newArray = this.array_move(this.state.tmpUrls, old_idx, new_idx)
+
+    this.setState({tmpUrls: newArray})
+  }
+  //CHANGE PICTURES POSITIONS ON ARRAY.
+  array_move(arr, old_index, new_index) {
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+            arr.push(undefined);
+        }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr; // for testing
+  };
+
+  //ADD NEW CATEGORY TO THE LIST.
+  addNewCategory(e){
+    e.preventDefault()
+    const name = this.state.newCategory.toUpperCase()
+    this.props.addNewCategory(name)
+    .then(data => {
+      this.setState({newCategoryMsg:data.data.message})
+      setTimeout(() => this.setState({newCategoryMsg:null}), 3000)
+    })
+  }
+
+  addNewSubCategory(e){
+    e.preventDefault()
+    const name = this.state.newSubCategory.toUpperCase()
+    const category = this.state.category
+    const body = {
+      name: name,
+      category: category
+    }
+    console.log(category)
+     this.props.addNewSubCategory(body)
+    .then(data => {
+      this.setState({newSubCategoryMsg:data.data.message})
+      setTimeout(() => this.setState({newSubCategoryMsg:null}), 3000)
+    })
   }
 
   render(){
     let dropzoneRef;
     
-    const images = this.props.product.urls.map(image => {
+    let images = this.state.tmpUrls.map((image, i) => {
+      var id = image.slice(9)
       return (
-       <div className="col-md-3">
-         <img src={image} style={{width:60, height:60}} className="img-thumbnail ml-3 mt-3"/>
-         <i class="far fa-times-circle ml-1" style={styles.imgIcon}
-          onClick
+       <div className="col-md-3 p-0" id={i} onDrop={this.onDropSwap.bind(this)} onDragOver={this.allowDrop.bind(this)} draggable="false">
+         <img src={image} style={{width:90, height:90}} className="img-thumbnail" draggable="true" onDragStart={this.dragStart.bind(this)} id={i}/>
+         <i className="far fa-times-circle ml-1" style={styles.imgIconSmall}
+          onClick={this.deletePicture.bind(this)}
          ></i>
+         <small>picture {i+1}</small>
        </div>
+        )
+    })
+
+    let categories  = this.props.misc.categoryList.map((category) => {
+      return (
+          <option value={category.name} 
+            onClick={(e)=>this.setState({category:e.target.value})}
+          >{category.name}</option>
         )
     })
 
@@ -76,7 +164,7 @@ class ProductForm extends Component {
             
             <form className="col-md-6">
             <div className="form-group ">
-                <label for="sku">Brand:</label>
+                <label for="sku">SKU:</label>
                 <input type="text" placeholder="Insert Sku e.g. AAA-000" id="sku" name="sku" className="form-control"
                 onChange={(e) => this.setState({sku: e.target.value})}
                 />
@@ -100,7 +188,7 @@ class ProductForm extends Component {
                 onChange={(e) => this.setState({color: e.target.value})}
                 />
               </div>  
-              <div className="form-group ">
+              <div className="form-group">
                 <label for="description">Description:</label>
                 <textarea type="text" placeholder="Insert Description" id="description" name="description" className="form-control" rows="5"
                 onChange={(e) => this.setState({description: e.target.value})}
@@ -112,24 +200,24 @@ class ProductForm extends Component {
                 onChange={(e) => this.setState({price: e.target.value})}
                 />
               </div>
-              {/*<Dropzone onDrop={(files) => this.uploadPicture(files)}>
-                <div>Try dropping some files here, or click to select files to upload.</div>
-              </Dropzone>*/}
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="validatedCustomFile" required onChange={this.fileChangedHandler.bind(this)}/>
-                <label class="custom-file-label" for="validatedCustomFile">{(this.state.selectedFile == null) ? null : this.state.selectedFile.name}</label>
+              <hr/>
+              <small className="mb-1">Be sure your main image is in first position, oterwise drag and drop it in its right place.</small>
+              <div className="row pl-3">
+                <Dropzone onDrop={this.fileChangedHandler.bind(this)} style={styles.dropzone}>
+                  {(this.state.tmppath == null) ? <p className="text-center">Select main picture first</p> : <div className="p-1">
+                       <img src={this.state.tmppath} style={{width:90, height:90}} className="img-thumbnail"/>
+                       <i className="far fa-times-circle" style={styles.imgIcon}
+                        onClick={()=>this.setState({tmppath:""})}
+                       ></i>
+                     </div>}
+                </Dropzone>
+                {images}
               </div>
+
               <div className="row no-gutters align-items-center">
                 <div className="col-md-3">
                   <button className="btn btn-primary mt-3" onClick={this.uploadHandler.bind(this)}>Upload</button>
                 </div>
-                  {(this.state.tmppath == null) ? null : <div className="col-md-3">
-                     <img src={this.state.tmppath} style={{width:60, height:60}} className="img-thumbnail ml-3 mt-3"/>
-                     <i className="far fa-times-circle" style={styles.imgIcon}
-                      onClick
-                     ></i>
-                   </div>}
-                 {images}
               </div>
             </form>
 
@@ -139,16 +227,21 @@ class ProductForm extends Component {
                 <label for="categories">Select Category</label>
                 <select class="custom-select" id="categories">
                   <option selected>Select Category</option>
-                  <option value="" ></option>
+                   {categories}
                 </select>
                 <small>*If the category you're looking for doesn't exists you can create one.</small>
               </div>
               <div className="form-group">
+                  {this.state.newCategoryMsg ? <div className="alert alert-success mb-0 p-1 text-center">{this.state.newCategoryMsg}</div> : null}
                   <label for="addCategory">Add New Category: </label>
                 <div className="input-group">
-                  <input type="text" placeholder="Add new category" name="addCategory" id="addCategory" className="form-control"/>
+                  <input type="text" placeholder="Add new category" name="addCategory" id="addCategory" className="form-control"
+                    onChange={(e) => this.setState({newCategory:e.target.value})}
+                  />
                   <div className="input-group-append">
-                    <span className="input-group-text"><i className="fas fa-plus"></i></span>
+                    <span className="input-group-text"
+                      onClick={this.addNewCategory.bind(this)}
+                    ><i className="fas fa-plus"></i></span>
                   </div>
                 </div>
               </div>
@@ -162,12 +255,18 @@ class ProductForm extends Component {
                 <small>*If the sub-category you're looking for doesn't exists you can create one.</small>
               </div>
               <div className="form-group">
+                 {this.state.newSubCategoryMsg ? <div className="alert alert-success mb-0 p-1 text-center">{this.state.newSubCategoryMsg}</div> : null}
                 <label for="addSubCategory">Add New Sub-Category: </label>
                 <div className="input-group">
-                  <input type="text" placeholder="Add new category" name="addSubCategory" id="addSubCategory" className="form-control"/>
+                  <input type="text" placeholder="Add new Sub-Category" name="addSubCategory" id="addSubCategory" className="form-control"
+                    onChange={(e) => this.setState({newSubCategory:e.target.value})}
+                  />
                   <div className="input-group-append">
-                    <span className="input-group-text"><i className="fas fa-plus"></i></span>
+                    <span className="input-group-text"
+                      onClick={this.addNewSubCategory.bind(this)}
+                    ><i className="fas fa-plus"></i></span>
                   </div>
+                  <small className="mt-1">*Make sure you have a category seleted before submit new sub-category.</small>
                 </div>
               </div>
 
@@ -182,11 +281,18 @@ class ProductForm extends Component {
               <div className="form-group">
                 <label for="size">Add New Size: </label>
                 <div className="input-group">
-                  <input type="text" placeholder="Add new category" name="size" id="size" className="form-control"/>
+                  <input type="text" placeholder="Add new size to the list e.g. S-M-L or 8.5-9-10" name="size" id="size" className="form-control"/>
                   <div className="input-group-append">
                     <span className="input-group-text"><i className="fas fa-plus"></i></span>
                   </div>
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label for="tax">Tax Fee</label>
+                <input placeholder="Tax Fee e.g. 20" name="tax" className="form-control"
+                  onChange={(e) => this.setState({taxFee:e.target.value})}
+                />
               </div>
 
             </form>
@@ -197,27 +303,55 @@ class ProductForm extends Component {
 }
 
 const styles = {
+  row: {
+    marginTop:2+"em"
+  },
   form: {
     width: "100%"
   }, 
+  dropzone: {
+    width:100,
+    height:100,
+    border:'2px dashed #696969',
+    borderRadius:3,
+    cursor:'pointer',
+    marginRight:1+'em'
+  },
   imgIcon: {
     position: 'relative',
-    left: -21,
-    top: -54,
-    color: '#ddd',
-    float: 'right'
-  }
+    left:-5,
+    top:-84,
+    color:'#999',
+    float:'right',
+    cursor:'pointer'
+  },
+  imgIconSmall: {
+    position: 'relative',
+    left:-22,
+    top:-88,
+    color: '#999',
+    float: 'right',
+    cursor:'pointer'
+  },
 }
 
 const stateToProps = (state) => {
   return {
-    product: state.product
+    product: state.product,
+    misc: state.misc
   }
 }
 
 const dispatchToProps = (dispatch) => {
   return {
-    uploadPictures: (formData, config) => dispatch(ProductActions.uploadPictures(formData, config))
+    uploadPictures: (formData, config) => dispatch(ProductActions.uploadPictures(formData, config)),
+    deletePicture: (body) => dispatch(ProductActions.deletePicture(body)),
+    addNewCategory: (name) => dispatch(MisceActions.addNewCategory(name)),
+    addNewSubCategory: (body) => dispatch(MisceActions.addNewSubCategory(body)),
+    loadDashboard: () => {
+      dispatch(MisceActions.fetchCategories()),
+      dispatch(MisceActions.fetchSizes())
+    }
   }
 }
 

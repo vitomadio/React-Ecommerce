@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
-import { ProductReducer, UserReducer, CartReducer } from '../reducers'
+import { ProductReducer, UserReducer, CartReducer, MiscReducer } from '../reducers'
 
 let store 
  export default {
@@ -8,7 +8,8 @@ let store
  		const reducers = combineReducers({
 			product: ProductReducer,
 			user: UserReducer,
-			cart: CartReducer
+			cart: CartReducer,
+			misc: MiscReducer
  		})
 
  		if(state){

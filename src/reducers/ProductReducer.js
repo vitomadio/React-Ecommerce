@@ -25,8 +25,14 @@ export default (state = initialState, action) => {
 
 		case constant.PICTURES_UPLOADED:
 			const path = action.data.path.replace('public','')
-			newUrls.unshift(path)
+			newUrls.push(path)
 			newState['urls'] = newUrls
+			return newState
+
+		case constant.PICTURE_DELETED:
+			const idx = action.data.index
+			newUrls.splice(idx,1) 	
+			newState['urls'] = newUrls		
 			return newState
 
 		default:

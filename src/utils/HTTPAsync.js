@@ -44,9 +44,10 @@ const multipartRequest = (url, data) => {
 }
 
 const delRequest = (url, body) => {
+	console.log(url)
 	return new Promise((resolve, reject) => {
 		superagent.del(url)
-		.send({cartId: body.cartId, idx: body.idx})
+		.send(body)
 		.set('Accept', 'application/json')
 		.end((err, response) => {
 			if (err) {
@@ -66,7 +67,7 @@ export default {
 	
 		return dispatch => getRequest(url, params)
 			.then(payload => {
-				// console.log('DATA: ' + JSON.stringify(payload))
+				console.log('DATA: ' + JSON.stringify(payload))
 				if (actionType != null){
 					return dispatch({
 						type: actionType,

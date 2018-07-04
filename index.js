@@ -14,6 +14,7 @@ const products = require('./routes/products');
 const cart = require('./routes/cart');
 const checkout = require('./routes/checkout');
 const authentication = require('./routes/authentication');
+const miscellaneous = require('./routes/miscellaneous');
 
 
 //Configures production port if it exists.
@@ -43,6 +44,7 @@ app.use('/products', products);
 app.use('/authentication', authentication);
 app.use('/cart', cart);
 app.use('/checkout', checkout);
+app.use('/miscellaneous', miscellaneous)
 
 
 app.listen(port, () => {
