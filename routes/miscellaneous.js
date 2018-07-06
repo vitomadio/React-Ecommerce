@@ -5,10 +5,10 @@ const Category = require('../models/category');
 const SubCategory = require('../models/subCategory');
 const Size = require('../models/size');
 
-//Category Crud
+//CATEGORIES & SUB-CATEGORIES CRUD
 
 router.get('/categories', (req,res) =>{
-	Category.find({},(err,categories) => {
+	Category.find({}).populate('subCategories').exec((err,categories) => {
 		if(err){
 			res.json({success:false,message:err.message})
 		}else{
@@ -17,6 +17,16 @@ router.get('/categories', (req,res) =>{
 			}else {
 				res.json({success:true, payload:categories})
 			}
+		}
+	})
+})
+
+router.get('/categories/:name', (req,res)=>{
+	Category.findOne({name:req.params.name}).populate('subCategories').exec((err, category)=>{
+		if(err){
+			res.json({success:false,message:err.message})
+		}else{
+			res.json({success:true, payload: category})
 		}
 	})
 })
@@ -64,7 +74,8 @@ router.post('/sub-categories', (req,res) => {
 								if(err){
 									res.json({success:false, message:err.message})
 								}else{
-									category.update({$push:{subCategories:subCategory}})
+									category.subCategories.unshift(subCategory)
+									category.save()
 								}
 							})
 						}
@@ -75,5 +86,9 @@ router.post('/sub-categories', (req,res) => {
 	})
 	
 })
+
+//SIZES CRUD
+
+
 
 module.exports = router;

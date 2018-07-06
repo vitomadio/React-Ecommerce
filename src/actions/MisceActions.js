@@ -10,6 +10,12 @@ export default  {
 			return dispatch(HTTPAsync.get(url+'/categories', null, constant.CATEGORIES_FETCHED))
 		}
 	},
+	
+	fetchSubCategories: (categoryName) => {
+		return (dispatch) => {
+			return dispatch(HTTPAsync.get(url+'/categories/'+categoryName, null, constant.SUB_CATEGORIES_FETCHED))
+		}
+	},
 
 	addNewCategory: (name) => {
 		return (dispatch) => {

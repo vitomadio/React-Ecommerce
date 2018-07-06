@@ -132,6 +132,12 @@ class ProductForm extends Component {
     })
   }
 
+  setCategory(e){
+    e.preventDefault()
+    this.setState({category:e.target.value})
+    this.props.fetchSubCategories(e.target.value)
+  }
+
   render(){
     let dropzoneRef;
     
@@ -151,10 +157,19 @@ class ProductForm extends Component {
     let categories  = this.props.misc.categoryList.map((category) => {
       return (
           <option value={category.name} 
-            onClick={(e)=>this.setState({category:e.target.value})}
+            onClick={this.setCategory.bind(this)}
           >{category.name}</option>
         )
     })
+
+    let subCategories  = this.props.misc.subCategoryList.map((subCategory) => {
+      return (
+          <option value={subCategory.name} 
+            onClick={(e)=>this.setState({category:e.target.value})}
+          >{subCategory.name}</option>
+        )
+    })
+    
 
     return (
       <div>
@@ -201,7 +216,7 @@ class ProductForm extends Component {
                 />
               </div>
               <hr/>
-              <small className="mb-1">Be sure your main image is in first position, oterwise drag and drop it in its right place.</small>
+              <small className="mb-1">Make sure your main image is in first position, oterwise drag and drop it in its right place.</small>
               <div className="row pl-3">
                 <Dropzone onDrop={this.fileChangedHandler.bind(this)} style={styles.dropzone}>
                   {(this.state.tmppath == null) ? <p className="text-center">Select main picture first</p> : <div className="p-1">
@@ -220,9 +235,9 @@ class ProductForm extends Component {
                 </div>
               </div>
             </form>
-
+            {/*RIGHT SIDE FORM*/}
             <form className="col-md-6">
-
+              {/*SELECT CATEGORY*/}
               <div className="form-group">
                 <label for="categories">Select Category</label>
                 <select class="custom-select" id="categories">
@@ -245,12 +260,12 @@ class ProductForm extends Component {
                   </div>
                 </div>
               </div>
-
+              {/*SELECT SUB-CATEGORY*/}
               <div className="form-group">
                 <label for="subCategories">Select Sub-Category</label>
                 <select class="custom-select" id="subCategories">
                   <option selected>Select Sub-Category</option>
-                  <option value="" ></option>
+                  {subCategories}
                 </select>
                 <small>*If the sub-category you're looking for doesn't exists you can create one.</small>
               </div>
@@ -266,8 +281,8 @@ class ProductForm extends Component {
                       onClick={this.addNewSubCategory.bind(this)}
                     ><i className="fas fa-plus"></i></span>
                   </div>
-                  <small className="mt-1">*Make sure you have a category seleted before submit new sub-category.</small>
                 </div>
+                  <small className="mt-1">*Make sure you have a category seleted before submit new sub-category.</small>
               </div>
 
               <div className="form-group">
@@ -351,7 +366,8 @@ const dispatchToProps = (dispatch) => {
     loadDashboard: () => {
       dispatch(MisceActions.fetchCategories()),
       dispatch(MisceActions.fetchSizes())
-    }
+    },
+    fetchSubCategories: (categoryName) => dispatch(MisceActions.fetchSubCategories(categoryName))
   }
 }
 
