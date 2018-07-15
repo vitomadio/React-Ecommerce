@@ -37,8 +37,8 @@ const User = require('../models/user'); //IMPORTING USER MODEL.
 								var smtpTransport = nodemailer.createTransport({
 									service: 'Gmail',
 									auth: {
-										user: 'vito.madio01@gmail.com',
-										pass: 'lolitalolita'
+										user: '<YOUR EMAIL>',
+										pass: '<YOUR PASSWORD>'
 									}
 								});
 								var mailOptions = {
@@ -180,8 +180,8 @@ const User = require('../models/user'); //IMPORTING USER MODEL.
      						var smtpTransport = nodemailer.createTransport({
      							service: 'Gmail',
      							auth: {
-     								user: 'vito.madio01@gmail.com',
-     								pass: 'lolitalolita'
+     								user: '<YOUR EMAIL>',
+     								pass: '<YOUR PASSWORD>'
      							}
      						});
      						var mailOptions = {
