@@ -10,8 +10,8 @@ const Invoice = require('../models/invoice');
 const paypal = require('paypal-rest-sdk');
 paypal.configure({
   'mode': 'sandbox', //sandbox or live 
-  'client_id': 'AcU91vOibYZccDBBf3q9AltlWkPWeNdT3qa6IHRP3gqKoxwexfJjoICdVLGv-bsrGtSMAN02arnKtjVr',
-  'client_secret': 'EAvo7_p2dID5edVxhfTjups09HlxIPpmq6lfOjKHBdyIejYVKWPqXd1eXM0LhA0_C0EVaG1KbpcjpV59'
+  'client_id': 'YOUR CLIENT ID',
+  'client_secret': 'YOUR CLIENT SECRET'
 });
 
 
